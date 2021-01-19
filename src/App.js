@@ -1,7 +1,8 @@
+import { useState } from 'react';
 import './App.css';
 import React from 'react';
 
-const ymdData=[
+const sampleData=[
   {
     mon:1,
     day:17,
@@ -23,11 +24,14 @@ const ymdData=[
 // });
 
 const App = () => {
+  const [ymdData, setYmdData] = useState(sampleData)
+
   return (
     <div>
+      <div>{ymdData[0].mon}</div>
       {ymdData.map((dayLoop)=>{
         return(
-          <div>{dayLoop.mon}/{dayLoop.day}</div>
+          <div>{dayLoop.day}</div>
         )
       })}
     </div>
