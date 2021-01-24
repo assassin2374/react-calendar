@@ -1,7 +1,7 @@
 import './App.css';
 import React from 'react';
-import { Calendar } from "./Calendar";
-import { Schedule } from "./Schedule";
+import Calendar from "./Calendar";
+import Schedule from "./Schedule";
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import axios from 'axios';
 
