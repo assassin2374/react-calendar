@@ -1,58 +1,28 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import './Schedule.css';
-import React from 'react';
+import { useHistory, useParams } from "react-router-dom";
 import axios from 'axios';
 
-const sampleData=[
-  {
-    mon:1,
-    day:17,
-  },
-  {
-    mon:1,
-    day:18,
-  },
-  {
-    mon:1,
-    day:19,
-  }
-];
-
-const sampleUser=[
-  {
-    id:0,
-    name:'matsumoto',
-    pass:'passward'
-  }
-];
-
-// const month(()=>{
-//   const day=31;
-//   push
-//   console.log(day);
-// });
-
 const Schedule = () => {
-  const [schedules, setSchedules] = useState([]);
-  const [user, setUser] = useState(sampleUser);
+
+  const id = parseInt(useParams().id);
+  const [schedule, setSchedule] = useState([]);
+
+  const history = useHistory();
 
   useEffect(()=>{
-    const getSchedule = async()=>{
-      const response = await axios.get('http://localhost:4000');
-      setSchedules(response.data);
+    const getSchedule=async ()=>{
+      const response = await axios.get(`http://localhost:4000/${id}`);
+      setSchedule(response.data)
     };
     getSchedule();
-  }, [setSchedules]);
+  }, [id, setSchedule]);
 
   return (
-    <div>
-      {schedules.map((schedule)=>{
-        return(
-          <div key={schedule.id}>{schedule.year}/{schedule.month}/{schedule.day}/{schedule.contents}</div>
-        )
-      })}
+    <div onClick={()=> history.push('/')}>
+      {schedule.year}/{schedule.month}/{schedule.day}/{schedule.contents}
     </div>
-  );
+  )
 }
 
-export default Schedule;
+export default Schedule

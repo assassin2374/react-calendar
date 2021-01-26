@@ -12,7 +12,7 @@ const App = () => {
     <div>
         <Router>
           <Route exact path="/" component={Calendar} />
-          <Route path="/edit/:id" component={Schedule} />
+          <Route path="/schedule/:id" component={Schedule} />
         </Router>
     </div>
   );
