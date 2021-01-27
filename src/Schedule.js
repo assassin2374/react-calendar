@@ -19,8 +19,13 @@ const Schedule = () => {
   }, [id, setSchedule]);
 
   return (
-    <div onClick={()=> history.push('/')}>
-      {schedule.year}/{schedule.month}/{schedule.day}/{schedule.contents}
+    <div>
+      <div>
+        {schedule.year}/{schedule.month}/{schedule.day}/{schedule.contents}
+      </div>
+      <input type='text' value={schedule.contents}/>
+      <button onClick={()=> history.push('/')}>追加</button>
+      <button onClick={()=> history.push('/')}>削除</button>
     </div>
   )
 }
