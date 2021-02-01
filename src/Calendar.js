@@ -45,7 +45,7 @@ const Calendar = () => {
       {schedules.map((schedule)=>{
         return(
           <div schedule={schedule} key={schedule.id} onClick={()=> history.push(`/schedule/${schedule.id}`)}>
-             {schedule.year}/{schedule.month}/{schedule.day}/{schedule.contents}
+             {schedule.year}/{schedule.month}/{schedule.day}
           </div>
         )
       })}
