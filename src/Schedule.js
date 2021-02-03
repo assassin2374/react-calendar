@@ -5,7 +5,7 @@ import axios from 'axios';
 
 const Schedule = () => {
   const id = parseInt(useParams().id);
-  const [scheduleList, setScheduleList] = useState([]);
+  //const [scheduleList, setScheduleList] = useState([]);
   const history = useHistory();
   const emptySchedule = {
     "user_id": 1,
@@ -27,18 +27,21 @@ const Schedule = () => {
   const changeContents=(e)=>{
     const newSchedule = Object.assign({},schedule);
     newSchedule.contents=e.target.value;
-    console.log(newSchedule);
     setSchedule(newSchedule);
   }
 
   const clickedSave=async()=>{
     if(schedule.contents==='')return;
-    const newScheduleList = scheduleList.slice();
+    const newSchedule = Object.assign({},schedule);
 
-    const newSchedule = newScheduleList.find((schedule)=>schedule.id===id);
-    await axios.put(`http://localhost:4000${id}`, newSchedule);
+    delete newSchedule.id;
+    delete newSchedule.created_at;
+    delete newSchedule.updated_at;
 
-    setScheduleList(newScheduleList);
+    await axios.put(`http://localhost:4000/${id}`, newSchedule);
+    console.log(newSchedule);
+
+    setSchedule(newSchedule);
     history.push('/');
   }
 
