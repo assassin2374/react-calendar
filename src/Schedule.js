@@ -5,7 +5,6 @@ import axios from 'axios';
 
 const Schedule = () => {
   const id = parseInt(useParams().id);
-  //const [scheduleList, setScheduleList] = useState([]);
   const history = useHistory();
   const emptySchedule = {
     "user_id": 1,
@@ -14,12 +13,13 @@ const Schedule = () => {
     "day": 24,
     "contents": "振替休日"
   };
-  const [schedule, setSchedule] = useState(emptySchedule)
+  //const [scheduleList, setScheduleList] = useState([]);
+  const [schedule, setSchedule] = useState(emptySchedule);
 
   useEffect(()=>{
     const getSchedule=async ()=>{
       const response = await axios.get(`http://localhost:4000/${id}`);
-      setSchedule(response.data)
+      setSchedule(response.data);
     };
     getSchedule();
   }, [id, setSchedule]);
@@ -45,6 +45,11 @@ const Schedule = () => {
     history.push('/');
   }
 
+  const clickedDelete=async()=>{
+    await axios.delete(`http://localhost:4000/${id}`);
+    history.push('/');
+  }
+
   return (
     <div>
       <h1>
@@ -54,7 +59,7 @@ const Schedule = () => {
       <input type='text' value={schedule.contents} onChange={changeContents}/>
       <button onClick={clickedSave}>変更</button>
       <button onClick={()=> history.push('/')}>追加</button>
-      <button onClick={()=> history.push('/')}>削除</button>
+      <button onClick={clickedDelete}>削除</button>
     </div>
   )
 }
