@@ -27,28 +27,71 @@ const sampleUser=[
 ];
 
 const Calendar = () => {
-  const [schedules, setSchedules] = useState([]);
+  const [scheduleList, setScheduleList] = useState([]);
+  const [contents, setContents] = useState([]);
+  const [ymdData, setYmdData] = useState([]);
   const [user, setUser] = useState(sampleUser);
 
   const history = useHistory();
 
   useEffect(()=>{
-    const getSchedule = async()=>{
+    const getScheduleList = async()=>{
       const response = await axios.get('http://localhost:4000');
-      setSchedules(response.data);
+      setScheduleList(response.data);
     };
-    getSchedule();
-  }, [setSchedules]);
+    getScheduleList();
+  }, [setScheduleList]);
+
+  const changeYmdData=(e)=>{
+    setYmdData(e.target.value);
+    console.log(ymdData);
+  }
+
+  const addContents=(e)=>{
+    setContents(e.target.value);
+    console.log(contents);
+  }
+  
+  const addSchedule=async()=>{
+    if(contents==='')return;
+    let newId = 0;
+    if(scheduleList.length > 0){
+      newId = Math.max(...scheduleList.map((todo)=>todo.id)) + 1;
+    }
+    const newScheduleList = scheduleList.slice();
+    const newSchedule ={
+      id:newId,
+      user_id:1,
+      year:2021,
+      month:2,
+      day:6,
+      contents:contents,
+    };
+
+    await axios.post(`http://localhost:4000`, newSchedule);
+    newScheduleList.push(newSchedule);
+
+    setScheduleList(newScheduleList);
+    setContents('');
+  }
 
   return (
     <div>
-      {schedules.map((schedule)=>{
-        return(
-          <div schedule={schedule} key={schedule.id} onClick={()=> history.push(`/schedule/${schedule.id}`)}>
-             {schedule.year}/{schedule.month}/{schedule.day}
-          </div>
-        )
-      })}
+      <div>schedule</div>
+      <input type="date" value={ymdData} onChange={changeYmdData}/>
+      <div>
+        <input type='text' value={contents} onChange={addContents}/>
+        <button onClick={addSchedule}>追加</button>
+      </div>
+      <div>
+        {scheduleList.map((schedule)=>{
+          return(
+            <div schedule={schedule} key={schedule.id} onClick={()=> history.push(`/schedule/${schedule.id}`)}>
+              {schedule.year}/{schedule.month}/{schedule.day}
+            </div>
+          )
+        })}
+      </div>
     </div>
   );
 };
