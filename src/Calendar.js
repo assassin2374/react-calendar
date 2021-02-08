@@ -42,9 +42,13 @@ const Calendar = () => {
     getScheduleList();
   }, [setScheduleList]);
 
-  const changeYmdData=(e)=>{
+  const addYmdData=(e)=>{
     setYmdData(e.target.value);
-    console.log(ymdData);
+    let newYmdData = '';
+    if(ymdData){
+      newYmdData = ymdData.split('-');
+    }
+    console.log(newYmdData);
   }
 
   const addContents=(e)=>{
@@ -78,7 +82,7 @@ const Calendar = () => {
   return (
     <div>
       <div>schedule</div>
-      <input type="date" value={ymdData} onChange={changeYmdData}/>
+      <input type="date" value={ymdData} onChange={addYmdData}/>
       <div>
         <input type='text' value={contents} onChange={addContents}/>
         <button onClick={addSchedule}>追加</button>
