@@ -43,17 +43,14 @@ const Calendar = () => {
   }, [setScheduleList]);
 
   const addYmdData=(e)=>{
-    setYmdData(e.target.value);
-    let newYmdData = '';
-    if(ymdData){
-      newYmdData = ymdData.split('-');
+    if(e.target.value.length !== 0){
+      setYmdData(e.target.value.split('-'));
     }
-    console.log(newYmdData);
+    console.log(ymdData);
   }
 
   const addContents=(e)=>{
     setContents(e.target.value);
-    console.log(contents);
   }
   
   const addSchedule=async()=>{
@@ -66,9 +63,9 @@ const Calendar = () => {
     const newSchedule ={
       id:newId,
       user_id:1,
-      year:2021,
-      month:2,
-      day:6,
+      year:ymdData[0],
+      month:ymdData[1],
+      day:ymdData[2],
       contents:contents,
     };
 
