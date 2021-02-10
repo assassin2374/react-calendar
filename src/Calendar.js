@@ -26,10 +26,18 @@ const sampleUser=[
   }
 ];
 
+const convertDateToString=(date)=>{
+  //date.setDate(date.getDate());
+  const yyyy = date.getFullYear();
+  const mm = ("0"+(date.getMonth()+1)).slice(-2);
+  const dd = ("0"+date.getDate()).slice(-2);
+  return yyyy+'-'+mm+'-'+dd;
+};
+
 const Calendar = () => {
   const [scheduleList, setScheduleList] = useState([]);
   const [contents, setContents] = useState([]);
-  const [ymdData, setYmdData] = useState([]);
+  const [ymdData, setYmdData] = useState(convertDateToString(new Date()));
   const [user, setUser] = useState(sampleUser);
 
   const history = useHistory();
@@ -44,9 +52,9 @@ const Calendar = () => {
 
   const addYmdData=(e)=>{
     if(e.target.value.length !== 0){
-      setYmdData(e.target.value.split('-'));
+      setYmdData(e.target.value);
+      console.log(ymdData);
     }
-    console.log(ymdData);
   }
 
   const addContents=(e)=>{
@@ -63,9 +71,9 @@ const Calendar = () => {
     const newSchedule ={
       id:newId,
       user_id:1,
-      year:ymdData[0],
-      month:ymdData[1],
-      day:ymdData[2],
+      year:ymdData.split[0],
+      month:ymdData.split[1],
+      day:ymdData.split[2],
       contents:contents,
     };
 
